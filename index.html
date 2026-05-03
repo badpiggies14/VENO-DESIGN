@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Veno Design | Premium Portfolio Booking</title>
+    <meta name="description" content="Book a premium, custom portfolio website service to showcase your work in the best light.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* Color System */
+            --bg-color: #050505;
+            --surface-color: #121212;
+            --surface-hover: #1a1a1a;
+            --accent-color: #d4af37; /* Luxury Gold */
+            --accent-glow: rgba(212, 175, 55, 0.4);
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            
+            /* Typography */
+            --font-display: 'Playfair Display', serif;
+            --font-body: 'Montserrat', sans-serif;
+            
+            /* Utilities */
+            --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --border-radius: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, .logo {
+            font-family: var(--font-display);
+            font-weight: 600;
+        }
+
+        /* Typography */
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3.5rem;
+            color: var(--text-primary);
+        }
+        
+        .section-title span {
+            color: var(--accent-color);
+            font-style: italic;
+        }
+
+        /* Navbar */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.5rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(5, 5, 5, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            color: var(--text-primary);
+            text-decoration: none;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .logo span {
+            color: var(--accent-color);
+        }
+
+        .nav-btn {
+            background: transparent;
+            color: var(--text-primary);
+            border: 1px solid var(--accent-color);
+            padding: 0.6rem 1.8rem;
+            font-family: var(--font-body);
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+
+        .nav-btn:hover {
+            background: var(--accent-color);
+            color: var(--bg-color);
+            box-shadow: 0 0 15px var(--accent-glow);
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0 5%;
+            overflow: hidden;
+        }
+
+        /* Animated Background Elements */
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, #151515 0%, #050505 100%);
+            z-index: -2;
+        }
+
+        .mesh-gradient {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(212, 175, 55, 0.06) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(212, 175, 55, 0.04) 0%, transparent 50%);
+            z-index: -1;
+            animation: pulse 8s infinite alternate ease-in-out;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.6; transform: scale(1); }
+            100% { opacity: 1; transform: scale(1.1); }
+        }
+
+        .hero-content {
+            max-width: 800px;
+            z-index: 1;
+            animation: fadeInUp 1s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero h1 {
+            font-size: 5rem;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -1px;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            max-width: 550px;
+            margin-left: auto;
+            margin-right: auto;
+            font-weight: 300;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            background: var(--accent-color);
+            color: var(--bg-color);
+            padding: 1.1rem 2.8rem;
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-radius: 4px;
+            transition: var(--transition);
+            border: 1px solid var(--accent-color);
+        }
+
+        .cta-btn:hover {
+            background: transparent;
+            color: var(--accent-color);
+            box-shadow: 0 0 25px var(--accent-glow);
+        }
+
+        /* Pricing Section */
+        .pricing {
+            padding: 8rem 5%;
+            background: var(--bg-color);
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: var(--surface-color);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        .card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
+            border-color: rgba(212, 175, 55, 0.15);
+            background: var(--surface-hover);
+        }
+
+        .card-img {
+            height: 220px;
+            width: 100%;
+            object-fit: cover;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            filter: grayscale(100%) brightness(0.7);
+            transition: var(--transition);
+        }
+
+        .card:hover .card-img {
+            filter: grayscale(0%) brightness(1);
+        }
+
+        .card-content {
+            padding: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .tier-name {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .tier-price {
+            font-size: 2.5rem;
+            color: var(--accent-color);
+            margin-bottom: 1.5rem;
+            font-weight: 400;
+            font-family: var(--font-display);
+        }
+
+        .feature-list {
+            list-style: none;
+            margin-bottom: 2.5rem;
+            flex-grow: 1;
+        }
+
+        .feature-list li {
+            position: relative;
+            padding-left: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            font-weight: 300;
+        }
+
+        .feature-list li::before {
+            content: "✦";
+            position: absolute;
+            left: 0;
+            color: var(--accent-color);
+            font-size: 0.8rem;
+            top: 3px;
+        }
+
+        .book-btn {
+            width: 100%;
+            padding: 1.1rem;
+            background: transparent;
+            color: var(--text-primary);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 4px;
+            font-family: var(--font-body);
+            font-weight: 500;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .card:hover .book-btn {
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+        }
+
+        .book-btn:hover {
+            background: var(--accent-color) !important;
+            color: var(--bg-color) !important;
+        }
+
+        /* Popular Card Highlight */
+        .card.popular {
+            position: relative;
+            border-color: rgba(212, 175, 55, 0.4);
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.08);
+            transform: scale(1.03);
+        }
+        
+        .card.popular.visible {
+            transform: scale(1.03) translateY(0);
+        }
+        
+        .card.popular:hover {
+            transform: scale(1.03) translateY(-12px);
+            box-shadow: 0 20px 50px rgba(212, 175, 55, 0.15);
+            border-color: var(--accent-color);
+        }
+
+        .badge {
+            position: absolute;
+            top: 1.2rem;
+            right: 1.2rem;
+            background: var(--accent-color);
+            color: var(--bg-color);
+            padding: 0.4rem 1rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 20px;
+            z-index: 10;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 6rem 5%;
+            background: var(--surface-color);
+            border-top: 1px solid rgba(255, 255, 255, 0.02);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 4rem;
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .feature-item h3 {
+            font-size: 1.3rem;
+            margin: 1.2rem 0 0.8rem;
+            font-family: var(--font-display);
+            letter-spacing: 0.5px;
+        }
+
+        .feature-item p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            font-weight: 300;
+        }
+
+        .icon {
+            font-size: 2.8rem;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+            display: inline-block;
+            filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.3));
+        }
+
+        /* Footer */
+        footer {
+            padding: 5rem 5% 3rem;
+            text-align: center;
+            background: var(--bg-color);
+        }
+
+        .footer-logo {
+            font-family: var(--font-display);
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+            letter-spacing: 2px;
+        }
+        
+        .footer-logo span {
+            color: var(--accent-color);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .social-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: var(--transition);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 500;
+        }
+
+        .social-links a:hover {
+            color: var(--accent-color);
+        }
+
+        .copyright {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            font-weight: 300;
+        }
+
+
+
+        /* Media Queries for Responsiveness */
+        @media (max-width: 1024px) {
+            .pricing-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .card.popular {
+                grid-column: span 2;
+                max-width: 500px;
+                margin: 0 auto;
+                transform: scale(1);
+            }
+            .card.popular.visible {
+                transform: translateY(0) scale(1);
+            }
+            .card.popular:hover {
+                transform: translateY(-12px) scale(1);
+            }
+            .features-grid {
+                gap: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 3.5rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .card.popular {
+                grid-column: span 1;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .card {
+                max-width: 1000px; /* Let it stretch on mobile */
+            }
+            
+            nav {
+                padding: 1rem 5%;
+            }
+            
+            .logo {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sticky Navigation -->
+    <nav>
+        <a href="#" class="logo">VENO <span>DESIGN</span></a>
+        <a href="#pricing" class="nav-btn">Start Project</a>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="hero-bg"></div>
+        <div class="mesh-gradient"></div>
+        <div class="hero-content">
+            <h1>Your Portfolio.<br>Built to Impress.</h1>
+            <p>Elevate your digital presence with a bespoke, high-performance website tailored exclusively for creative professionals.</p>
+            <a href="#pricing" class="cta-btn">View Packages</a>
+        </div>
+    </header>
+
+    <!-- Pricing / Booking Cards Section -->
+    <section class="pricing" id="pricing">
+        <h2 class="section-title">Select Your <span>Tier</span></h2>
+        
+        <div class="pricing-grid">
+            <!-- Tier 1 -->
+            <div class="card fade-element" style="transition-delay: 0.1s;">
+                <img src="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Minimalist desk setup for basic portfolio" class="card-img">
+                <div class="card-content">
+                    <h3 class="tier-name">🥉 Basic Portfolio</h3>
+                    <div class="tier-price">₹500</div>
+                    <ul class="feature-list">
+                        <li>Clean single-page design</li>
+                        <li>Minimal sections</li>
+                        <li>Mobile responsive layout</li>
+                        <li>Delivered in 3 days</li>
+                    </ul>
+                    <button class="book-btn" onclick="openModal('Basic Portfolio')">Book Now</button>
+                </div>
+            </div>
+
+            <!-- Tier 2 (Most Popular) -->
+            <div class="card popular fade-element" style="transition-delay: 0.3s;">
+                <div class="badge">Most Popular</div>
+                <img src="https://images.unsplash.com/photo-1541462608143-67571c6738dd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Design tools and color swatches for styled portfolio" class="card-img">
+                <div class="card-content">
+                    <h3 class="tier-name">🥈 Styled Version</h3>
+                    <div class="tier-price">₹1500</div>
+                    <ul class="feature-list">
+                        <li>Multi-section layout</li>
+                        <li>Custom color theme & styling</li>
+                        <li>Smooth entry animations</li>
+                        <li>Working contact form</li>
+                        <li>Delivered in 5 days</li>
+                    </ul>
+                    <button class="book-btn" onclick="openModal('Styled Version')">Book Now</button>
+                </div>
+            </div>
+
+            <!-- Tier 3 -->
+            <div class="card fade-element" style="transition-delay: 0.5s;">
+                <img src="https://images.unsplash.com/photo-1558655146-d09347e92766?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="High end creative workspace for animated portfolio" class="card-img">
+                <div class="card-content">
+                    <h3 class="tier-name">🥇 Animated Version</h3>
+                    <div class="tier-price">₹3000+</div>
+                    <ul class="feature-list">
+                        <li>Advanced scroll animations</li>
+                        <li>Parallax & hover effects</li>
+                        <li>Custom complex interactions</li>
+                        <li>Premium fonts & SEO-ready</li>
+                        <li>Delivered in 7 days</li>
+                    </ul>
+                    <button class="book-btn" onclick="openModal('Animated Version')">Book Now</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us Section -->
+    <section class="features">
+        <div class="features-grid">
+            <div class="feature-item">
+                <span class="icon">⚡</span>
+                <h3>Fast Delivery</h3>
+                <p>A streamlined workflow ensuring your custom site goes live within days, not months.</p>
+            </div>
+            <div class="feature-item">
+                <span class="icon">✨</span>
+                <h3>Custom Design</h3>
+                <p>Tailored luxury aesthetics that perfectly match your personal brand and artistic vision.</p>
+            </div>
+            <div class="feature-item">
+                <span class="icon">📱</span>
+                <h3>Mobile-First</h3>
+                <p>A flawless, fluid experience across all devices, ensuring your work looks great everywhere.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-logo">VENO <span>DESIGN</span></div>
+        <div class="social-links">
+            <a href="#">Instagram</a>
+            <a href="#">Twitter</a>
+            <a href="#">LinkedIn</a>
+            <a href="#">Dribbble</a>
+        </div>
+        <div class="copyright">&copy; 2026 Veno Design Studio. All rights reserved.</div>
+    </footer>
+
+
+
+    <!-- JavaScript -->
+    <script>
+        // 1. Staggered fade-in animations on scroll using Intersection Observer
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.15
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target); // Stop observing once visible
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-element').forEach(el => {
+            observer.observe(el);
+        });
+
+        // 2. WhatsApp Redirection Logic for "Book Now" buttons
+        function openModal(planName) {
+            const phoneNumber = "919447413750"; // Using India country code by default
+            const message = encodeURIComponent(`Hello, I'm interested in booking the ${planName} design service.`);
+            window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
+        }
+    </script>
+</body>
+</html>
