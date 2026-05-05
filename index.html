@@ -51,26 +51,6 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Custom Cursor */
-        .cursor-dot, .cursor-ring {
-            position: fixed;
-            top: 0; left: 0;
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 9999;
-            transform: translate(-50%, -50%);
-        }
-        .cursor-dot {
-            width: 6px;
-            height: 6px;
-            background: var(--gold);
-        }
-        .cursor-ring {
-            width: 34px;
-            height: 34px;
-            border: 1px solid var(--gold);
-            transition: width 0.3s, height 0.3s, background 0.3s;
-        }
 
         /* Scroll Progress Bar */
         #scroll-progress {
@@ -577,9 +557,6 @@
 </head>
 <body>
 
-    <!-- Custom Cursor -->
-    <div class="cursor-dot"></div>
-    <div class="cursor-ring"></div>
     <div id="scroll-progress"></div>
 
     <!-- Navigation -->
@@ -808,43 +785,144 @@
 
     <!-- Scripts -->
     <script>
-        // Custom Cursor Logic
-        const dot = document.querySelector('.cursor-dot');
-        const ring = document.querySelector('.cursor-ring');
-        let mouseX = window.innerWidth / 2;
-        let mouseY = window.innerHeight / 2;
-        let ringX = mouseX;
-        let ringY = mouseY;
+        // --- Advanced Awwwards Cursor System ---
+        (function() {
+            if ('ontouchstart' in window || navigator.maxTouchPoints > 0) return;
 
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-            dot.style.transform = `translate(${mouseX}px, ${mouseY}px) translate(-50%, -50%)`;
-        });
+            const style = document.createElement('style');
+            style.innerHTML = `
+                @media (hover: hover) and (pointer: fine) { html, body, a, button, input, textarea, .magnetic { cursor: none !important; } }
+                .adv-cursor-dot, .adv-cursor-ring, .adv-cursor-aura, .adv-cursor-trail {
+                    position: fixed; top: 0; left: 0; border-radius: 50%; pointer-events: none; z-index: 99999;
+                    display: flex; justify-content: center; align-items: center; font-family: 'Outfit', sans-serif;
+                    color: #c9a84c; text-transform: uppercase; letter-spacing: 1px; opacity: 0;
+                    transition: opacity 0.3s ease, width 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), height 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.4s ease, border 0.4s ease, border-radius 0.4s ease;
+                }
+                .adv-cursor-dot { width: 6px; height: 6px; background: #c9a84c; opacity: 1; transition: background-color 0.2s ease, width 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), height 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.2s ease; }
+                .adv-cursor-ring { width: 34px; height: 34px; border: 1.5px solid rgba(201,168,76,0.7); background: transparent; opacity: 1; }
+                .adv-cursor-ring span { font-size: 7px; font-weight: 600; opacity: 0; transition: opacity 0.2s ease; white-space: nowrap; position: absolute; }
+                .adv-cursor-aura { width: 65px; height: 65px; border: 0.5px solid rgba(201,168,76,0.15); background: transparent; opacity: 1; }
+                
+                .adv-cursor-ring.state-hover-link { width: 56px; height: 56px; background: rgba(201,168,76,0.08); border: 1.5px solid #c9a84c; }
+                .adv-cursor-ring.state-hover-link span { opacity: 1; }
+                .adv-cursor-aura.state-hover-link { width: 80px; height: 80px; }
+                .adv-cursor-dot.state-hidden { opacity: 0; }
 
-        // Lerp loop for the outer ring lag
-        function animateRing() {
-            ringX += (mouseX - ringX) * 0.15;
-            ringY += (mouseY - ringY) * 0.15;
-            ring.style.transform = `translate(${ringX}px, ${ringY}px) translate(-50%, -50%)`;
-            requestAnimationFrame(animateRing);
-        }
-        animateRing();
+                .adv-cursor-ring.state-hover-image { width: 80px; height: 80px; border: 1px dashed rgba(201,168,76,0.6); }
+                .adv-cursor-ring.state-hover-image span { opacity: 1; }
+                .adv-cursor-aura.state-hover-image { width: 110px; height: 110px; background: rgba(201,168,76,0.04); }
+                
+                .adv-cursor-ring.state-hover-text { width: 40px; height: 2px; border: none; background: #c9a84c; border-radius: 1px; }
+                .adv-cursor-aura.state-hover-text { opacity: 0.3; }
+                
+                .adv-cursor-dot.state-click { width: 3px; height: 3px; background: #fff; }
+                .adv-cursor-ring.state-click { width: 20px; height: 20px; border-color: #fff; opacity: 1; background: transparent; }
+                .adv-cursor-aura.state-click { width: 40px; height: 40px; }
 
-        // Add hover effects to cursor on interactables
-        const interactables = document.querySelectorAll('a, button');
-        interactables.forEach(el => {
-            el.addEventListener('mouseenter', () => {
-                ring.style.width = '60px';
-                ring.style.height = '60px';
-                ring.style.background = 'rgba(201, 168, 76, 0.1)';
+                .cursor-ripple { position: fixed; border-radius: 50%; border: 1.5px solid #c9a84c; pointer-events: none; z-index: 99998; transform: translate(-50%, -50%); animation: rippleAnim 600ms cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+                @keyframes rippleAnim { 0% { width: 0; height: 0; opacity: 0.4; } 100% { width: 80px; height: 80px; opacity: 0; } }
+                .adv-cursor-trail { width: 3px; height: 3px; background: #c9a84c; transition: opacity 0.4s ease; }
+                .magnetic { transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); }
+            `;
+            document.head.appendChild(style);
+
+            document.querySelectorAll('a, button, .btn').forEach(el => { if(!el.dataset.cursor) el.dataset.cursor = 'link'; el.classList.add('magnetic'); });
+            document.querySelectorAll('.card, img, .card-img-wrap').forEach(el => { if(!el.dataset.cursor) el.dataset.cursor = 'image'; });
+            document.querySelectorAll('h1, h2, h3, .display-font, p').forEach(el => { if(!el.dataset.cursor) el.dataset.cursor = 'text'; });
+
+            const aura = document.createElement('div'); aura.className = 'adv-cursor-aura';
+            const ring = document.createElement('div'); ring.className = 'adv-cursor-ring';
+            const ringText = document.createElement('span'); ring.appendChild(ringText);
+            const dot = document.createElement('div'); dot.className = 'adv-cursor-dot';
+            document.body.appendChild(aura); document.body.appendChild(ring); document.body.appendChild(dot);
+
+            let mouse = { x: window.innerWidth/2, y: window.innerHeight/2 };
+            let dotPos = { x: mouse.x, y: mouse.y };
+            let ringPos = { x: mouse.x, y: mouse.y };
+            let auraPos = { x: mouse.x, y: mouse.y };
+            
+            const trails = [];
+            for(let i=0; i<6; i++) {
+                const t = document.createElement('div'); t.className = 'adv-cursor-trail';
+                document.body.appendChild(t); trails.push({ el: t, x: mouse.x, y: mouse.y });
+            }
+
+            window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; if(dot.style.opacity == 0) { dot.style.opacity = 1; ring.style.opacity = 1; aura.style.opacity = 1; } });
+            
+            window.addEventListener('mousedown', () => {
+                dot.classList.add('state-click'); ring.classList.add('state-click'); aura.classList.add('state-click');
+                const ripple = document.createElement('div'); ripple.className = 'cursor-ripple';
+                ripple.style.left = mouse.x + 'px'; ripple.style.top = mouse.y + 'px';
+                document.body.appendChild(ripple); setTimeout(() => ripple.remove(), 600);
             });
-            el.addEventListener('mouseleave', () => {
-                ring.style.width = '34px';
-                ring.style.height = '34px';
-                ring.style.background = 'transparent';
+            window.addEventListener('mouseup', () => { dot.classList.remove('state-click'); ring.classList.remove('state-click'); aura.classList.remove('state-click'); });
+
+            const setHoverState = (state, txt = '') => {
+                ring.classList.remove('state-hover-link', 'state-hover-image', 'state-hover-text');
+                aura.classList.remove('state-hover-link', 'state-hover-image', 'state-hover-text');
+                dot.classList.remove('state-hidden');
+                ringText.innerText = txt;
+                if (state) {
+                    if (state === 'link' || state === 'image') dot.classList.add('state-hidden');
+                    ring.classList.add('state-hover-' + state);
+                    aura.classList.add('state-hover-' + state);
+                }
+            };
+
+            document.querySelectorAll('[data-cursor]').forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    const type = el.dataset.cursor;
+                    if(type === 'link') setHoverState('link', 'CLICK');
+                    else if(type === 'image') setHoverState('image', 'VIEW');
+                    else if(type === 'text') setHoverState('text');
+                });
+                el.addEventListener('mouseleave', () => setHoverState(''));
             });
-        });
+
+            document.querySelectorAll('.magnetic').forEach(el => {
+                el.addEventListener('mousemove', (e) => {
+                    const rect = el.getBoundingClientRect();
+                    const dx = e.clientX - (rect.left + rect.width / 2);
+                    const dy = e.clientY - (rect.top + rect.height / 2);
+                    const dist = Math.sqrt(dx*dx + dy*dy);
+                    if (dist < 80) el.style.transform = `translate(${(dx/dist)*Math.min(dist,12)}px, ${(dy/dist)*Math.min(dist,12)}px)`;
+                    else el.style.transform = 'translate(0, 0)';
+                });
+                el.addEventListener('mouseleave', () => el.style.transform = 'translate(0, 0)');
+            });
+
+            let angle = 0;
+            const updateHistory = [];
+            const lerp = (c, t, s) => c + (t - c) * s;
+
+            function render() {
+                dotPos.x = lerp(dotPos.x, mouse.x, 1); dotPos.y = lerp(dotPos.y, mouse.y, 1);
+                ringPos.x = lerp(ringPos.x, mouse.x, 0.12); ringPos.y = lerp(ringPos.y, mouse.y, 0.12);
+                auraPos.x = lerp(auraPos.x, mouse.x, 0.07); auraPos.y = lerp(auraPos.y, mouse.y, 0.07);
+
+                angle += (ring.classList.contains('state-hover-image') ? 0.5 : 1.5);
+                const isRot = ring.classList.contains('state-hover-link') || ring.classList.contains('state-hover-image');
+                const rotStr = isRot ? ` rotate(${angle}deg)` : '';
+                
+                dot.style.transform = `translate(${dotPos.x}px, ${dotPos.y}px) translate(-50%, -50%)`;
+                ring.style.transform = `translate(${ringPos.x}px, ${ringPos.y}px) translate(-50%, -50%)${rotStr}`;
+                aura.style.transform = `translate(${auraPos.x}px, ${auraPos.y}px) translate(-50%, -50%)`;
+                if(isRot) ringText.style.transform = `rotate(${-angle}deg)`; else ringText.style.transform = 'none';
+
+                updateHistory.unshift({x: dotPos.x, y: dotPos.y});
+                if(updateHistory.length > 24) updateHistory.pop();
+                
+                trails.forEach((t, i) => {
+                    const hist = updateHistory[i * 3];
+                    if(hist) {
+                        t.el.style.transform = `translate(${hist.x}px, ${hist.y}px) translate(-50%, -50%)`;
+                        t.el.style.opacity = 0.3 - (i * 0.05);
+                    }
+                });
+                requestAnimationFrame(render);
+            }
+            render();
+        })();
 
         // Scroll Progress Bar & Navbar Blur
         const progressBar = document.getElementById('scroll-progress');
